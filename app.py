@@ -230,58 +230,156 @@ def category_name(key):
     return CATEGORIES[key][lang]
 
 # ==================================================
+
+# ==================================================
 # 5. DESIGN
 # ==================================================
 
 st.markdown("""
 <style>
+
+/* Негізгі бет */
 .block-container {
     max-width: 850px;
-    padding-top: 2rem;
-    padding-bottom: 3rem;
+    padding: 2rem 1.5rem 2.5rem 1.5rem;
 }
+
+/* Басты тақырып */
 .main-title {
     text-align: center;
-    font-size: 35px;
-    font-weight: bold;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 10px 0 12px 0;
+    overflow-wrap: anywhere;
 }
+
+/* Қосымша тақырып */
 .subtitle {
     text-align: center;
     color: #777;
-    font-size: 16px;
+    font-size: 17px;
+    line-height: 1.5;
+    margin-bottom: 12px;
 }
+
+/* Сипаттама */
+.description {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 12px 0 20px 0;
+}
+
+/* Тіл таңдау */
+div[data-testid="stSelectbox"] {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+/* Батырмалар */
 div.stButton > button,
 div.stDownloadButton > button {
     width: 100%;
-    border-radius: 10px;
-    min-height: 45px;
+    min-height: 50px;
+    border-radius: 12px;
     font-weight: 600;
 }
-@media (max-width: 600px) {
-    .main-title {
-        font-size: 27px;
-    }
+
+/* Мәтін енгізу */
+.stTextArea textarea {
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+/* Телефонға бейімдеу */
+@media screen and (max-width: 600px) {
+
     .block-container {
-        padding: 1rem;
+        padding: 1.2rem 1rem 1.5rem 1rem !important;
+    }
+
+    .main-title {
+        font-size: 28px;
+        line-height: 1.35;
+    }
+
+    .subtitle {
+        font-size: 15px;
+    }
+
+    .description {
+        font-size: 15px;
+    }
+
+    .stTextArea textarea {
+        font-size: 15px;
+        min-height: 125px;
+    }
+
+    div.stButton > button,
+    div.stDownloadButton > button {
+        min-height: 48px;
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 26px !important;
+    }
+
+    h2 {
+        font-size: 23px !important;
+    }
+
+    h3 {
+        font-size: 19px !important;
     }
 }
+
+/* Streamlit төменгі футері */
+footer {
+    visibility: hidden;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
+
+# Үш тіл негізгі бетте көрінеді
+selected_flag = st.selectbox(
+    "🌐 Интерфейс тілі / Тіл / Language",
+    options=list(LANGUAGES.keys()),
+    index=list(LANGUAGES.values()).index(
+        st.session_state.language
+    )
+)
+
+lang = LANGUAGES[selected_flag]
+st.session_state.language = lang
+
+
+# Басты тақырып
 st.markdown(
     '<div class="main-title">🛡️ ScamDetector AI</div>',
     unsafe_allow_html=True
 )
 
+# Қосымша тақырып
 st.markdown(
     f'<div class="subtitle">{tr("subtitle")}</div>',
     unsafe_allow_html=True
 )
 
-st.write(tr("description"))
+# Сипаттама
+st.markdown(
+    f'<div class="description">{tr("description")}</div>',
+    unsafe_allow_html=True
+)
+
 st.divider()
 
 # ==================================================
+
 # 6. FRAUD DETECTION RULES
 # ==================================================
 
